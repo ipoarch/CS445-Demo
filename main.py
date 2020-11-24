@@ -1,4 +1,5 @@
 from sklearn.decomposition import NMF
+from sklearn.decomposition import PCA
 # import song_importer as s
 import image_importer as i
 import numpy as np
@@ -11,8 +12,10 @@ for filename in os.listdir('european-flood-2013_imgs_small/imgs_small/')[:]:
     decomp = i.decompose_img(os.path.join('european-flood-2013_imgs_small/imgs_small/', filename))
     every_pixel = np.append(every_pixel, decomp[0], axis=0)
 
-    model = NMF(n_components=2, init='random', random_state=0)
+    # model = NMF(n_components=2, init='random', random_state=0)
     # model = NMF(n_components=2, init='random', random_state=0, l1_ratio=1)
+    model = PCA(n_components=2)
+    PCA_NMF = "PCA"
     l1 = False
     W = model.fit_transform(every_pixel[1:])
     H = model.components_
@@ -24,6 +27,6 @@ for filename in os.listdir('european-flood-2013_imgs_small/imgs_small/')[:]:
     # print(decomp[2])
     # print(filename)
 
-    # i.make_image(filename, W, H, decomp[1], decomp[2], mode="parts", l1r=l1)
-    i.make_image(filename, W, H, decomp[1], decomp[2], mode="parts2", l1r=l1)
-    # i.make_image(filename, W, H, decomp[1], decomp[2], l1r=l1)
+    i.make_image(filename, W, H, decomp[1], decomp[2], mode="parts", l1r=l1, model=PCA_NMF)
+    # i.make_image(filename, W, H, decomp[1], decomp[2], mode="parts2", l1r=l1, model=PCA_NMF)
+    i.make_image(filename, W, H, decomp[1], decomp[2], l1r=l1, model=PCA_NMF)

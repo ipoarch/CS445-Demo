@@ -7,7 +7,7 @@ def decompose_img(filename):
         # print(picture_rgb)
         return np.array([picture_rgb, f.size[0], f.size[1]], dtype='object')
 
-def make_image(filename, W, H, width, height, mode="reconstructed", l1r=False):
+def make_image(filename, W, H, width, height, mode="reconstructed", l1r=False, model="NMF"):
     if (mode == "parts"):
         new_pixels = np.empty([1, 3])
         count = 0
@@ -53,4 +53,4 @@ def make_image(filename, W, H, width, height, mode="reconstructed", l1r=False):
         # f.show()
         f = f.rotate(-90, expand=True)
         f = ImageOps.mirror(f)
-        f.save("generated/" + prefix + "_" + mode + "_" + filename, "JPEG")
+        f.save("generated/" + model + "_" + prefix + "_" + mode + "_" + filename, "JPEG")
